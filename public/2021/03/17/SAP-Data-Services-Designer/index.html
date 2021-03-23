@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>SAP Data Services Designer | 宅谈</title>
+    <meta name="keywords" content="hexo,theme,otakism,otaku"/>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="google-site-verification" content=""/>
+    <meta name="baidu-site-verification" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="SAP DATA SERVICES DESIGNER工具介绍和基础使用（抽表）接下来简称DS SAP BusinessObjects Data Service 是通过SAP HANA认证的ETL工具。采用数据批量处理的方式，定期执行后台作业，将数据从多个业务系统中抽取出来，并进行必要的处理（转换，合并，过滤，清晰），然后在加载到HANA数据库中。 DS组件之间的关系：      Designer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAP Data Services Designer">
+<meta property="og:url" content="http://example.com/2021/03/17/SAP-Data-Services-Designer/index.html">
+<meta property="og:site_name" content="宅谈">
+<meta property="og:description" content="SAP DATA SERVICES DESIGNER工具介绍和基础使用（抽表）接下来简称DS SAP BusinessObjects Data Service 是通过SAP HANA认证的ETL工具。采用数据批量处理的方式，定期执行后台作业，将数据从多个业务系统中抽取出来，并进行必要的处理（转换，合并，过滤，清晰），然后在加载到HANA数据库中。 DS组件之间的关系：      Designer">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/20200811145254657.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318111958.png">
+<meta property="og:image" content="http://example.com/img/20200811154500211.png">
+<meta property="og:image" content="http://example.com/img/20200811154704891.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318164049.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318164227.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318164346.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318170041.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318170601.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318170649.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210318171011.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319085415.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319085849.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319090259.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319090340.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319090825.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319091413.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319091622.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319092829.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319093220.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319093541.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319093607.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319094058.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210319094206.png">
+<meta property="og:image" content="http://example.com/img/fdacab61d58425e368f30729feb2d2c8.jpg">
+<meta property="article:published_time" content="2021-03-17T01:12:54.000Z">
+<meta property="article:modified_time" content="2021-03-22T08:07:10.536Z">
+<meta property="article:author" content="Freere-Aoki">
+<meta property="article:tag" content="study">
+<meta property="article:tag" content="ds">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/20200811145254657.png">
+    
+
+    <!-- Favicon -->
+    
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,700" rel="stylesheet">
+
+    
+<link rel="stylesheet" href="/style.css">
+
+    <script>
+      function setLoadingBarProgress(num) {
+        document.getElementById('loading-bar').style.width = num + "%";
+      }
+    </script>
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+<div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+<script>setLoadingBarProgress(20)</script>
+
+<div id="site-wrapper">
+
+    <header id="header">
+    <div id="header-wrapper" class="clearfix">
+        <a id="logo" href="/">
+            <img src="/img/logo.png"/>
+            <span id="site-desc">
+                otaku keeps alive
+            </span>
+        </a>
+        <button id="site-nav-switch">
+            <span class="icon icon-menu"></span>
+        </button>
+    </div>
+</header>
+    <script>setLoadingBarProgress(40);</script>
+
+    <main id="main" role="main">
+        <article id="post-SAP-Data-Services-Designer"
+         class="post article white-box article-type-post"
+         itemscope itemprop="blogPost">
+    <h2 class="title">
+        <a href="/2021/03/17/SAP-Data-Services-Designer/">
+            SAP Data Services Designer
+        </a>
+    </h2>
+    <time>
+        3月 17, 2021
+    </time>
+    <section class="content">
+        <div class="article-entry" itemprop="articleBody">
+            <h5><span id="sap-data-services-designer工具介绍和基础使用抽表">SAP DATA SERVICES DESIGNER工具介绍和基础使用（抽表）</span></h5><p>接下来简称DS</p>
+<p>SAP BusinessObjects Data Service 是通过SAP HANA认证的ETL工具。采用数据批量处理的方式，定期执行后台作业，将数据从多个业务系统中抽取出来，并进行必要的处理（转换，合并，过滤，清晰），然后在加载到HANA数据库中。</p>
+<p>DS组件之间的关系：</p>
+<img src="\img\20200811145254657.png" alt="20200811145254657" style="zoom:60%;">
+
+<table>
+<thead>
+<tr>
+<th align="left">Designer</th>
+<th>用户可在此界面1. 创建、测试以及执行填充数据仓库的作业<br>2. 创建并通过拖拽的方法连接对象形成流程图<br>3. 在流程图中打开编辑修改对象的配置<br>4. 定义数据映像、转换以及逻辑控制<br>5. 通过将对象组合到工作流（作业执行定义）和数据流（数据转换定义）中来创建应用程序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Job Server</td>
+<td>启动数据服务处理的引擎以及数据服务套件与其他组件的接口的引擎的应用程序。</td>
+</tr>
+<tr>
+<td align="left">Engine</td>
+<td>执行在Designer中定义的各个作业，以有效地完成已定义的任务。</td>
+</tr>
+<tr>
+<td align="left">Repository</td>
+<td>存储Designer预定义系统对象和用户定义对象（包括源和目标元数据以及转换规则）的数据库。 创建一个本地存储库，然后创建一个中央存储库，以与其他用户共享对象并进行版本控制。</td>
+</tr>
+<tr>
+<td align="left">Access Server</td>
+<td>在Web应用程序与数据服务作业服务器和引擎之间传递消息。 提供用于请求响应处理的可靠且可扩展的接口。</td>
+</tr>
+<tr>
+<td align="left">Administrator</td>
+<td>提供以下基于浏览器的数据服务资源管理的Web管理员：<br>1. 计划，监视和执行批处理作业<br>2. 配置，启动和停止实时服务<br>3. 配置作业服务器，访问服务器和存储库使用情况<br>4. 配置和管理适配器<br>5. 管理用户<br>6. 通过Web服务发布批处理作业和实时服务</td>
+</tr>
+</tbody></table>
+<h6><span id="用户界面介绍">用户界面介绍</span></h6><img class="bigimg" src="\img\QQ截图20210318111958.png" alt="QQ截图20210318111958" style="zoom:150%;">
+
+<p>Projects(项目)：项目包含作业，工作流和数据流等子对象，项目是Data Services的最高级对象，主要用于组织管理子对象，一个项目通常包含多个作业</p>
+<p>Job(作业)：可独立安排执行的最小工作单元。 作业由工作流和数据流组成，这些工作流和数据流按顺序和指定方式处理流程。</p>
+<p>Work flows(工作流)：工作流指定处理数据流的顺序。将下级数据流安排在工作流下，以便一个数据流的输出准备好输入到预期数据流。</p>
+<p>Data flows(数据流)：数据流是将源数据转换为目标数据的过程。数据流按在工作流中排列的顺序处理数据。数据流定义了数据服务需要完成的基本任务。 基本任务是将数据从一个或多个源移动到一个或多个目标表或文件。通过标识提取数据的源，数据应进行的转换以及目标来定义数据流。</p>
+<h6><span id="data-services对象列表">Data Services对象列表</span></h6><img src="\img\20200811154500211.png" alt="20200811154500211" style="zoom:70%;">
+
+<h6><span id="对象层级以及从属关系">对象层级以及从属关系</span></h6><img src="\img\20200811154704891.png" alt="20200811154704891" style="zoom:100%;">
+
+<h5><span id="ds数据加载方式">DS数据加载方式</span></h5><p>将演示最基本的从其他系统中抽取数据到SAP HANA中（多图预警）</p>
+<p>*注：<del>如何创建datastores连接其他系统和数据库此文不进行阐述</del>*，下面的演示为全量抽取，将一次将表中的全部数据抽取到你想要的数据库里。</p>
+<p>根据对象层级以及从属关系来创建</p>
+<p><em>也可以直接在local object library点击不同的对象独立创建<del>（但不推荐，因为不好管理也不好找）</del></em></p>
+<p>首先创建project，在local object library界面中选择project，然后空白处选择New</p>
+<img src="\img\QQ截图20210318164049.png" alt="QQ截图20210318164049" style="zoom:50%;">
+
+<p>起一个你喜欢的名字（project name）*<del>见名知意，最好再加上注释🙏</del>*，然后点击create（创建）</p>
+<img src="\img\QQ截图20210318164227.png" alt="QQ截图20210318164227" style="zoom:50%;">
+
+<p>之后再local object library中右击刚刚创建的project，点击open（打开）</p>
+<img src="\img\QQ截图20210318164346.png" alt="QQ截图20210318164346" style="zoom:50%;">
+
+<p>它就会在project Area上显示树状图</p>
+<img src="\img\QQ截图20210318170041.png" alt="QQ截图20210318170041" style="zoom:50%;">
+
+<p>之后右击空白位置或者project选择new batch job（新建批量作业）</p>
+<img src="\img\QQ截图20210318170601.png" alt="QQ截图20210318170601" style="zoom:50%;">
+
+<p>通常名字和要进行的业务相关 <del>见名知意</del>（这就是我们需要执行的作业，可以手动或者定时执行</p>
+<img src="\img\QQ截图20210318170649.png" alt="QQ截图20210318170649" style="zoom:50%;">
+
+<p>之后双击就应该会在右侧工作区打开，应该是一片空白，空无一物，这时我们就需要点击右侧工具区的Dataflow（数据流），然后到空白区域左键单击新建一个df，名字一般应和你要抽取的表同名，比如说：DF_XXXX</p>
+<img src="\img\QQ截图20210318171011.png" alt="QQ截图20210318171011" style="zoom:50%;">
+
+<p>之后鼠标双击你刚才新建的df进入df的工作区，准备开始抽取表数据</p>
+<h6><span id="流程">流程：</span></h6><ol>
+<li>在你要抽取数据的datastore中右键tables—import by name创建source表（源数据表，也就是你要抽取的表）。</li>
+<li>鼠标左键拖拽到df工作区，选择Make Source(作为源表)  。</li>
+<li>然后在右侧工具区拖拽query对数据进行处理（<del>也可以跳过query，不进行输入处理，直接将源表和目标表连线</del></li>
+<li>从右侧工具区拖拽template(临时表)到df工具区，填上你想要抽到哪个datastore和schema。</li>
+<li>保存执行</li>
+</ol>
+<h6><span id="示例">示例：</span></h6><p>步骤一：</p>
+<p>在datastore导入表</p>
+<img src="\img\QQ截图20210319085415.png" alt="QQ截图20210319085415" style="zoom:50%;">
+
+<p>填写表的信息，之后点击import导入</p>
+<img src="\img\QQ截图20210319085849.png" alt="QQ截图20210319085849" style="zoom:50%;">
+
+<p>步骤二：</p>
+<p>鼠标拖拽刚刚导入的表到右侧ds工作区，选择make source作为源表</p>
+<img src="\img\QQ截图20210319090259.png" alt="QQ截图20210319090259" style="zoom:50%;">
+
+<p>最后是这个样子的，中间图示的表格深蓝色而且清晰，绿色箭头向右</p>
+<img src="\img\QQ截图20210319090340.png" alt="QQ截图20210319090340" style="zoom:50%;">
+
+<p>步骤三：</p>
+<p>点击工具区中的query，鼠标图标应该会发生改变，随后点击df的工作区创建一个query</p>
+<img src="\img\QQ截图20210319090825.png" alt="QQ截图20210319090825" style="zoom:50%;">
+
+<p>之后通过鼠标悬浮到源表右侧的小点，鼠标图标应该会变换成一个拿着粉笔的手，随后左键单击拖拽就应该会出现连线，将线连接到query控件左侧的三角形</p>
+<img src="\img\QQ截图20210319091413.png" alt="QQ截图20210319091413" style="zoom:50%;">
+
+<p>随后双击进入query，对数据进行处理</p>
+<img src="\img\QQ截图20210319091622.png" alt="QQ截图20210319091622" style="zoom: 50%;">
+
+<p>步骤四：</p>
+<p>也是通过左键工具区中的template（临时表）到ds工作区，填写要抽到库里的表名和schema，表名应和要抽取的表同名</p>
+<img src="\img\QQ截图20210319092829.png" alt="QQ截图20210319092829" style="zoom: 50%;">
+
+<p>随后通过query连线到临时表，最后应该是这样子的</p>
+<img src="\img\QQ截图20210319093220.png" alt="QQ截图20210319093220" style="zoom:50%;">
+
+<p>双击右侧的临时表，点击options，拖到最下方吧这一行改为YES！<del>不然字符串的数据抽取可能出现问题</del></p>
+<img src="\img\QQ截图20210319093541.png" alt="QQ截图20210319093541" style="zoom:33%;">
+
+<img src="\img\QQ截图20210319093607.png" alt="QQ截图20210319093607" style="zoom:50%;">
+
+<p>步骤五：</p>
+<p>到job页面或者在左侧project area右键job选运行。如果没保存会提示让你保存，随后执行，点ok</p>
+<img src="\img\QQ截图20210319094058.png" alt="QQ截图20210319094058" style="zoom:50%;">
+
+<img src="\img\QQ截图20210319094206.png" alt="QQ截图20210319094206" style="zoom:50%;">
+
+<p>保存执行！</p>
+<p>本文中展示数据皆为示例，不太具有实际参考价值，但步骤相同，推荐举一反三。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JanoZhuo/article/details/107934029">部分引自SAP Data Services Designer - Ⅰ（User interface and Setting）</a></p>
+<img class="litimg" src="\img\fdacab61d58425e368f30729feb2d2c8.jpg" alt="fdacab61d58425e368f30729feb2d2c8" style="zoom:50%;">
+
+<p>この何もないの世界に、お前わ何が欲しいのが</p>
+
+        </div>
+        <div class="article-tags tags">
+            
+                <a class="tag-none-link" href="/tags/ds/" rel="tag">ds</a><a class="tag-none-link" href="/tags/study/" rel="tag">study</a>
+            
+        </div>
+    </section>
+</article>
+
+
+
+
+
+        <script>setLoadingBarProgress(60);</script>
+    </main>
+
+    <footer id="footer" class="clearfix">
+
+    
+
+    <div class="social-wrapper">
+        
+            
+                <a href="https://github.com/artchen" class="social github"
+                   target="_blank" rel="external">
+                    <span class="icon icon-github"></span>
+                </a>
+            
+                <a href="/atom.xml" class="social rss"
+                   target="_blank" rel="external">
+                    <span class="icon icon-rss"></span>
+                </a>
+            
+        
+    </div>
+
+    <div class="theme-by">Theme <span class="codename">Memory</span> designed by <a href="https://artifact.me/"
+                                                                                    target="_blank">Art Chen</a>.
+    </div>
+    <div>&copy; <a href="/">宅谈</a></div>
+
+</footer>
+
+
+    <script>setLoadingBarProgress(80);</script>
+    <div class="overlay"></div>
+</div>
+
+<div class="site-sidebar" id="site-sidebar">
+
+    
+
+    <div class="sidebar-switch clearfix "
+         style="display: none">
+        <a class="dark-btn active" data-toggle="toc">
+            <span class="icon icon-list"></span>
+            <span class="text">Index</span>
+        </a>
+        <a class="dark-btn" data-toggle="bio">
+            <span class="icon icon-person"></span>
+            <span class="text">Bio</span>
+        </a>
+    </div>
+
+    <div class="site-toc "
+         style="display: none">
+        
+            <div class="no-index">No Index</div>
+        
+    </div>
+
+    <div class="site-bio show"
+         style="display: block">
+
+        <div class="about-me clearfix">
+            <div class="avatar">
+                <img src="/img/avatar.png"/>
+            </div>
+            <div class="info">
+                <a class="name dark-btn" href="/about">
+                    Freere-Aoki
+                </a>
+            </div>
+            <div class="info">
+                <span class="item desc">
+                    你还在期待着什么？
+                </span>
+            </div>
+        </div>
+
+        <div class="menu section">
+            <ul class="clearfix">
+                
+                    <li class="left">
+                        <a href="/about"
+                           onfocus="this.blur();"
+                           class="nav-俺様だ❕ dark-btn block">
+                            About
+                        </a>
+                    </li>
+                
+                    <li class="right">
+                        <a href="/archives"
+                           onfocus="this.blur();"
+                           class="nav-図書館 dark-btn block">
+                            Archives
+                        </a>
+                    </li>
+                
+                    <li class="left">
+                        <a href="/header"
+                           onfocus="this.blur();"
+                           class="nav-俺の頭 dark-btn block">
+                            Header
+                        </a>
+                    </li>
+                
+                    <li class="right">
+                        <a href="/gunName"
+                           onfocus="this.blur();"
+                           class="nav-黑色魅影 dark-btn block">
+                            GunName
+                        </a>
+                    </li>
+                
+                    <li class="left">
+                        <a href="/Links"
+                           onfocus="this.blur();"
+                           class="nav-友人帐 dark-btn block">
+                            LINKS
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="shortcuts">
+        <a href="#header" class="top window-nav dark-btn" id="go-top">
+            <span class="icon icon-chevron-thin-up"></span>
+        </a>
+        <a class="close dark-btn" id="sidebar-close">
+            <span class="icon icon-close"></span>
+        </a>
+        <a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+            <span class="icon icon-chevron-thin-down"></span>
+        </a>
+    </div>
+
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script>
+
+
+<script src="/js/jquery.fitvids.js"></script>
+
+<script>
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var SEARCH_SERVICE = "";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="/js/app.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script>setLoadingBarProgress(100);</script>
+
+</body>
+</html>

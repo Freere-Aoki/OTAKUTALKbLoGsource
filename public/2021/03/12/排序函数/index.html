@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>排序函数 | 宅谈</title>
+    <meta name="keywords" content="hexo,theme,otakism,otaku"/>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="google-site-verification" content=""/>
+    <meta name="baidu-site-verification" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="排序函数：  排序函数的作用是基于一个结果集返回一个排序值。排序值就是一个数字，这个数字是典型的以1开始且自增长为1的行值。由排序函数来决定排序值。可以使唯一的对于当前结果集，或者某些行数据有相同的排序值。接下来介绍不同的排序函数以及如何使用这些函数。 示例数据：   语法： 1234--select 函数名()over(order by 想排序的列名) from 表名--such as sele">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序函数">
+<meta property="og:url" content="http://example.com/2021/03/12/%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="宅谈">
+<meta property="og:description" content="排序函数：  排序函数的作用是基于一个结果集返回一个排序值。排序值就是一个数字，这个数字是典型的以1开始且自增长为1的行值。由排序函数来决定排序值。可以使唯一的对于当前结果集，或者某些行数据有相同的排序值。接下来介绍不同的排序函数以及如何使用这些函数。 示例数据：   语法： 1234--select 函数名()over(order by 想排序的列名) from 表名--such as sele">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/QQ截图20210312144133.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210312145034.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210312145927.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210312150624.png">
+<meta property="og:image" content="http://example.com/img/QQ截图20210312160137.png">
+<meta property="og:image" content="http://example.com/img/20200429013947.52ff80ba8cacf5780b8e9e93e02e02ef.png">
+<meta property="article:published_time" content="2021-03-12T00:42:58.000Z">
+<meta property="article:modified_time" content="2021-03-22T08:07:07.024Z">
+<meta property="article:author" content="Freere-Aoki">
+<meta property="article:tag" content="study">
+<meta property="article:tag" content="sql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/QQ截图20210312144133.png">
+    
+
+    <!-- Favicon -->
+    
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,700" rel="stylesheet">
+
+    
+<link rel="stylesheet" href="/style.css">
+
+    <script>
+      function setLoadingBarProgress(num) {
+        document.getElementById('loading-bar').style.width = num + "%";
+      }
+    </script>
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+<div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+<script>setLoadingBarProgress(20)</script>
+
+<div id="site-wrapper">
+
+    <header id="header">
+    <div id="header-wrapper" class="clearfix">
+        <a id="logo" href="/">
+            <img src="/img/logo.png"/>
+            <span id="site-desc">
+                otaku keeps alive
+            </span>
+        </a>
+        <button id="site-nav-switch">
+            <span class="icon icon-menu"></span>
+        </button>
+    </div>
+</header>
+    <script>setLoadingBarProgress(40);</script>
+
+    <main id="main" role="main">
+        <article id="post-排序函数"
+         class="post article white-box article-type-post"
+         itemscope itemprop="blogPost">
+    <h2 class="title">
+        <a href="/2021/03/12/%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0/">
+            排序函数
+        </a>
+    </h2>
+    <time>
+        3月 12, 2021
+    </time>
+    <section class="content">
+        <div class="article-entry" itemprop="articleBody">
+            <h5><span id="排序函数">排序函数：</span></h5><p>  排序函数的作用是基于一个结果集返回一个排序值。排序值就是一个数字，这个数字是典型的以1开始且自增长为1的行值。由排序函数来决定排序值。可以使唯一的对于当前结果集，或者某些行数据有相同的排序值。接下来介绍不同的排序函数以及如何使用这些函数。</p>
+<p>示例数据：</p>
+<img src="\img\QQ截图20210312144133.png" alt="QQ截图20210312144133" style="zoom:80%;">
+
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--select 函数名()over(order by 想排序的列名) from 表名</span></span><br><span class="line"><span class="comment">--such as </span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">rank</span>()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> ssex <span class="keyword">order</span> <span class="keyword">by</span> sage <span class="keyword">desc</span>) </span><br><span class="line"><span class="keyword">from</span> &quot;student&quot;</span><br></pre></td></tr></table></figure>
+
+<p><em>注：over（）开窗函数用法在此文中不进行介绍</em></p>
+<h6><span id="row_number"><strong>ROW_NUMBER()</strong></span></h6><p><strong>定义</strong>：ROW_NUMBER()函数作用就是将select查询到的数据进行排序，每一条数据加一个序号，他不能用做于学生年龄的排名，一般多用于分页查询，因为在遇到相同年龄时序号依然会继续自增，而非并列的序号。</p>
+<p><strong>栗子：</strong>根据年龄降序排列学生</p>
+<img src="\img\QQ截图20210312145034.png" alt="QQ截图20210312145034" style="zoom:80%;">
+
+<p>ROW_NUMBER（）当遇到相同年龄时序号依然会自增</p>
+<h6><span id="rank"><strong>RANK()</strong></span></h6><p><strong>定义：</strong>RANK()函数，顾名思义排名函数，可以对某一个字段进行排名，与ROW_NUMBER()不同，当存在相同年龄的学生时，ROW_NUMBER()会继续进行排序，他们的序号不相同，而Rank()则不一样，当出现相同的年龄时，他们的排名是一样的，并且会跳过已经占用的序号。</p>
+<p><strong>栗子：</strong>根据年龄降序排列学生</p>
+<img src="\img\QQ截图20210312145927.png" alt="QQ截图20210312145927" style="zoom:80%;">
+
+<p><em>这里第五条数据突然从2号序号跳跃到5号序号，是因为上面已经有四位同学被排序过，按照已经被排序的数据条数就是5号</em></p>
+<p>RANK（）当遇到相同年龄时序号时序号不会自增，而是和相同年龄时的序号相同。同时当再次向下排序遇到不同年龄时，会根据已进行排序的条数来跳跃序号。</p>
+<h6><span id="dense_rank"><strong>DENSE_RANK()</strong></span></h6><p><strong>定义</strong>：DENSE_RANK()函数也是排名函数，和RANK()功能相似，也是对字段进行排名，那它和RANK()到底有什么不同那？</p>
+<p><strong>栗子：</strong>根据年龄降序排列学生</p>
+<img src="\img\QQ截图20210312150624.png" alt="QQ截图20210312150624" style="zoom:80%;">
+
+<p>dense_rank函数的功能与rank函数类似，dense_rank函数在生成序号时是连续的，而rank函数生成的序号有可能不连续。dense_rank函数出现相同排名时，将不跳过相同排名号，rank值紧接上一次的rank值。在各个分组内，rank()是跳跃排序，有两个第一名时接下来就是第四名，dense_rank()是连续排序，有两个第一名时仍然跟着第二名。</p>
+<p><strong>NTILE()</strong></p>
+<p><strong>定义</strong>：ntile函数可以对序号进行分组处理，将有序分区中的行分发到指定数目的组中。 各个组有编号，编号从一开始。 对于每一个行，ntile 将返回此行所属的组的编号。这就相当于将查询出来的记录集放到指定长度的数组中，每一个数组元素存放一定数量的记录。ntile函数为每条记录生成的序号就是这条记录所有的数组元素的索引（从1开始）。也可以将每一个分配记录的数组元素称为“桶”。ntile函数有一个参数，用来指定桶数。</p>
+<img src="\img\QQ截图20210312160137.png" alt="QQ截图20210312160137" style="zoom:80%;">
+
+<p><em>将年龄降序并且平均分为四个桶（区）</em></p>
+<p>　　ntile函数的分组依据（约定）：</p>
+<p>　　<strong>1、每组的记录数不能大于它上一组的记录数，即编号小的桶放的记录数不能小于编号大的桶。就是说，第1组中的记录数只能大于等于第2组及以后各组中的记录数。</strong></p>
+<p>　　<strong>2、所有组中的记录数要么都相同，要么从某一个记录较少的组（命名为X）开始后面所有组的记录数都与该组（X组）的记录数相同。也就是说，如果有个组，前三组的记录数都是9，而第四组的记录数是8，那么第五组和第六组的记录数也必须是8。</strong></p>
+<p>以上为四个排序函数的用法，最后一个可能不算排序，而是根据排序内容分桶，应用场景一般不为排序。而这些排序函数都依赖于over分窗函数，可以看到排序都是在它之中进行的，同时它也可以使用partition by排序的同时分组，类似于group by，也可以根据row和range进行开窗，但这里不过多解释。！</p>
+<p><strong>总结：</strong></p>
+<p>在使用排名函数的时候需要注意以下三点：</p>
+<p>　　1、排名函数必须有 OVER 子句。</p>
+<p>　　2、排名函数必须有包含 ORDER BY 的 OVER 子句。</p>
+<p>　　3、分组内从1开始排序。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/52XF/p/4209211.html">引自[Sql 四大排名函数（ROW_NUMBER、RANK、DENSE_RANK、NTILE）简介]</a></p>
+<img src="\img\20200429013947.52ff80ba8cacf5780b8e9e93e02e02ef.png" alt="20200429013947.52ff80ba8cacf5780b8e9e93e02e02ef" style="zoom:33%;">
+
+
+        </div>
+        <div class="article-tags tags">
+            
+                <a class="tag-none-link" href="/tags/sql/" rel="tag">sql</a><a class="tag-none-link" href="/tags/study/" rel="tag">study</a>
+            
+        </div>
+    </section>
+</article>
+
+
+
+
+
+        <script>setLoadingBarProgress(60);</script>
+    </main>
+
+    <footer id="footer" class="clearfix">
+
+    
+
+    <div class="social-wrapper">
+        
+            
+                <a href="https://github.com/artchen" class="social github"
+                   target="_blank" rel="external">
+                    <span class="icon icon-github"></span>
+                </a>
+            
+                <a href="/atom.xml" class="social rss"
+                   target="_blank" rel="external">
+                    <span class="icon icon-rss"></span>
+                </a>
+            
+        
+    </div>
+
+    <div class="theme-by">Theme <span class="codename">Memory</span> designed by <a href="https://artifact.me/"
+                                                                                    target="_blank">Art Chen</a>.
+    </div>
+    <div>&copy; <a href="/">宅谈</a></div>
+
+</footer>
+
+
+    <script>setLoadingBarProgress(80);</script>
+    <div class="overlay"></div>
+</div>
+
+<div class="site-sidebar" id="site-sidebar">
+
+    
+
+    <div class="sidebar-switch clearfix "
+         style="display: none">
+        <a class="dark-btn active" data-toggle="toc">
+            <span class="icon icon-list"></span>
+            <span class="text">Index</span>
+        </a>
+        <a class="dark-btn" data-toggle="bio">
+            <span class="icon icon-person"></span>
+            <span class="text">Bio</span>
+        </a>
+    </div>
+
+    <div class="site-toc "
+         style="display: none">
+        
+            <div class="no-index">No Index</div>
+        
+    </div>
+
+    <div class="site-bio show"
+         style="display: block">
+
+        <div class="about-me clearfix">
+            <div class="avatar">
+                <img src="/img/avatar.png"/>
+            </div>
+            <div class="info">
+                <a class="name dark-btn" href="/about">
+                    Freere-Aoki
+                </a>
+            </div>
+            <div class="info">
+                <span class="item desc">
+                    你还在期待着什么？
+                </span>
+            </div>
+        </div>
+
+        <div class="menu section">
+            <ul class="clearfix">
+                
+                    <li class="left">
+                        <a href="/about"
+                           onfocus="this.blur();"
+                           class="nav-俺様だ❕ dark-btn block">
+                            About
+                        </a>
+                    </li>
+                
+                    <li class="right">
+                        <a href="/archives"
+                           onfocus="this.blur();"
+                           class="nav-図書館 dark-btn block">
+                            Archives
+                        </a>
+                    </li>
+                
+                    <li class="left">
+                        <a href="/header"
+                           onfocus="this.blur();"
+                           class="nav-俺の頭 dark-btn block">
+                            Header
+                        </a>
+                    </li>
+                
+                    <li class="right">
+                        <a href="/gunName"
+                           onfocus="this.blur();"
+                           class="nav-黑色魅影 dark-btn block">
+                            GunName
+                        </a>
+                    </li>
+                
+                    <li class="left">
+                        <a href="/Links"
+                           onfocus="this.blur();"
+                           class="nav-友人帐 dark-btn block">
+                            LINKS
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="shortcuts">
+        <a href="#header" class="top window-nav dark-btn" id="go-top">
+            <span class="icon icon-chevron-thin-up"></span>
+        </a>
+        <a class="close dark-btn" id="sidebar-close">
+            <span class="icon icon-close"></span>
+        </a>
+        <a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+            <span class="icon icon-chevron-thin-down"></span>
+        </a>
+    </div>
+
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script>
+
+
+<script src="/js/jquery.fitvids.js"></script>
+
+<script>
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var SEARCH_SERVICE = "";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="/js/app.js"></script>
+
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script>setLoadingBarProgress(100);</script>
+
+</body>
+</html>
